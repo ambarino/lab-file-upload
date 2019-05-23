@@ -6,5 +6,15 @@
   </head>
   <body>
     <h1>Welcome to IronTumblr</h1>
+  <div >
+      {{#each post}}
+    <div class="post-card">
+      <p>{{this.content}}</p>
+      <img src="{{this.picPath}}" alt="imagen de post">
+    </div>
+      {{/each}}
+  </div>
+
+
   </body>
 </html>

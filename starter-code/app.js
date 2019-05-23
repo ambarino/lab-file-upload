@@ -6,13 +6,14 @@ const cookieParser       = require('cookie-parser');
 const bodyParser         = require('body-parser');
 const passport           = require('passport');
 const LocalStrategy      = require('passport-local').Strategy;
-const User               = require('./models/user');
+const User               = require('./models/User.model');
 const bcrypt             = require('bcrypt');
 const session            = require('express-session');
 const MongoStore         = require('connect-mongo')(session);
 const mongoose           = require('mongoose');
 const flash              = require('connect-flash');
 const hbs                = require('hbs')
+const cloudinaryConfig   = require('./config/cloudinary.config')
 
 mongoose.connect('mongodb://localhost:27017/tumblr-lab-development');
 
@@ -69,6 +70,11 @@ passport.use('local-signup', new LocalStrategy(
                 return next(null, false);
             } else {
                 // Destructure the body
+                console.log(req.file)
+
+                const imgPath = req.file.url
+                const imgName = req.file.originalname
+
                 const {
                   username,
                   email,
@@ -78,7 +84,9 @@ passport.use('local-signup', new LocalStrategy(
                 const newUser = new User({
                   username,
                   email,
-                  password: hashPass
+                  password: hashPass,
+                  imgPath,
+                  imgName
                 });
 
                 newUser.save((err) => {
@@ -99,10 +107,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-const index = require('./routes/index');
-const authRoutes = require('./routes/authentication');
+const index = require('./routes/index.routes');
 app.use('/', index);
-app.use('/', authRoutes);
+
+const authRoutes = require('./routes/auth/authentication.routes');
+app.use('/auth', authRoutes);
+
+const postRoutes = require('./routes/post/post.routes')
+app.use('/post', postRoutes)
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

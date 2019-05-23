@@ -1,8 +1,43 @@
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  text-align: center;
+}
+
+input{
+  display: block;
+  margin: 20px auto;
 }
 
 a {
   color: #00B7FF;
 }
+
+.post-card {
+  background-color: whitesmoke;
+  color: rgb(47, 47, 47);
+  border: 1px solid white;
+  width: 90vw;
+  text-align: center;
+}
+
+h1{
+  font-size: 3.2em;
+  margin: 25px;
+}
+
+ul li{
+  display: inline-block;
+  margin: 0 70px;
+}
+
+.post-card p {
+  margin: 10px;
+  
+}
+
+img {
+  height: 300px;
+  width: auto;
+}
+
