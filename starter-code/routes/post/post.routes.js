@@ -23,4 +23,21 @@ router.post('/create', cloudinaryConfig.single('pic'), (req, res, next) => {
 
 })
 
+router.post("/comment/:id", [ensureLoggedIn("/auth/login"), cloudinaryConfig.single('imgComment')],(req,res,next) => {
+  const content = req.body.content
+  const authorId = req.user.id
+  
+  const imagePath = req.file.url
+  const imageName = req.file.originalname
+
+  const newComment = {content: "asdasdasda" ,authorId, imagePath, imageName}
+  const postId = req.params.id
+
+  Post.findByIdAndUpdate(postId, {$push: {comments: newComment}})
+    .then( comment => {
+      
+      res.redirect("/")
+    })
+})
+
 module.exports = router

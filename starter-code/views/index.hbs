@@ -11,6 +11,18 @@
     <div class="post-card">
       <p>{{this.content}}</p>
       <img src="{{this.picPath}}" alt="imagen de post">
+       
+      <div id="comments">Comentarios: 
+        <form action="/post/comment/{{this._id}}" method="POST" enctype="multipart/form-data">
+        <label for="content-comment"></label>
+        <input type="text" name="content-comment">
+
+        <label for="imgComment"></label>
+        <input type="file" name="imgComment">
+        <button>Comenta biatch!</button>
+        </form>
+
+      </div>
     </div>
       {{/each}}
   </div>
